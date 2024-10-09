@@ -45,10 +45,8 @@
     "enter_your_password": "Please enter your password",
 
     "enter_your_email_address_and_we_will_send_to_you_a_password_reset_email":"Enter your email address and we will send you a password reset email.",
-    "Forgot Your Password": "Forgot Your Password?",
-    "Back to Profile": "Back to Profile",
-    "Enter Your Password Pld": "Please enter your password",
-    "Enter Your Email Pld": "Please enter your email",
+    "forgot_your_password": "Forgot Your Password?",
+    "back_to_profile": "Back to Profile",
 
     "dont_account": "Don't have an account?",
     "confirm_password": "Confirm password",
@@ -57,7 +55,7 @@
     "enter_your_expiry_date":"Enter your expiry date",
     "confirm": "Confirm",
 
-    "Sign In ITAGE SHOP": "Sign In ITage Shop",
+    "sign_in_ITAGE_SHOP": "Sign In ITage Shop",
 
     "login_with_google":"Login with Google",
     "login_with_facebook":"Login with Facebook",

@@ -8,3 +8,5 @@ package-lock.json
 debug.log
 ../.vs/
 .vs/
+e-commerce.Server/obj/Debug/
+*/obj/Debug/
