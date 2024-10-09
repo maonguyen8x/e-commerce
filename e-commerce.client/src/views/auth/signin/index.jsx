@@ -51,105 +51,106 @@ const SignIn = ({ history }) => {
 		if (isAuthenticating) e.preventDefault();
 	};
 
-  return (
-    <div className="auth-content">
-      {authStatus?.success && (
-        <div className="loader">
-          <h3 className="toast-success auth-success">
-            {authStatus.message}
-            <LoadingOutlined />
-          </h3>
-        </div>
-      )}
-      {!authStatus?.success && (
-        <>
-          {authStatus?.message && (
-            <h5 className="text-center toast-error">
-              {authStatus?.message}
-            </h5>
-          )}
-          <div className={`auth ${authStatus?.message && (!authStatus?.success && 'input-error')}`}>
-            <div className="auth-main">
-              <h3>{t('sign_in_itage_shop')}</h3>
-              <br />
-              <div className="auth-wrapper">
-                <Formik
-                  initialValues={{
-                    email: '',
-                    password: ''
-                  }}
-                  validateOnChange
-                  validationSchema={SignInSchema}
-                  onSubmit={onSubmitForm}
-                >
-                  {() => (
-                    <Form>
-                      <div className="auth-field">
-                        <Field
-                          disabled={isAuthenticating}
-                          name="email"
-                          type="email"
-                          label="Email"
-                          placeholder={t('enter_your_email')}
-                          component={CustomInput}
-                        />
-                      </div>
-                      <div className="auth-field">
-                        <Field
-                          disabled={isAuthenticating}
-                          name="password"
-                          type="password"
-                          label="Password"
-                          placeholder= {t('enter_your_password')}
-                          component={CustomInput}
-                        />
-                      </div>
-                      <br />
-                      <div className="auth-field auth-action">
-                        <Link
-                          onClick={onClickLink}
-                          style={{ textDecoration: 'underline' }}
-                          to={FORGOT_PASSWORD}
-                        >
-                          <span>{t('forgot_your_password')}</span>
-                        </Link>
-                        <button
-                          className="button auth-button"
-                          disabled={isAuthenticating}
-                          type="submit"
-                        >
-                          {isAuthenticating ? 'Signing In' : 'Sign In'}
-                          &nbsp;
-                          {isAuthenticating ? <LoadingOutlined /> : <ArrowRightOutlined />}
-                        </button>
-                      </div>
-                    </Form>
-                  )}
-                </Formik>
-              </div>
-            </div>
-            <div className="auth-divider">
-              <h6>OR</h6>
-            </div>
-            <SocialLogin isLoading={isAuthenticating} />
-          </div>
-          <div className="auth-message">
-            <span className="auth-info">
-              <strong>{t('dont_account')}</strong>
-            </span>
-            <button
-              className="button button-small button-border button-border-gray button-icon"
-              disabled={isAuthenticating}
-              onClick={onSignUp}
-              type="button"
-            >
-              {t('sign_up')}
-            </button>
-          </div>
-        </>
-      )}
-    </div>
-  );
+	return (
+		<div className="auth-content">
+			{authStatus?.success && (
+				<div className="loader">
+					<h3 className="toast-success auth-success">
+						{authStatus.message}
+						<LoadingOutlined />
+					</h3>
+				</div>
+			)}
+			{!authStatus?.success && (
+				<>
+					{authStatus?.message && (
+						<h5 className="text-center toast-error">{authStatus?.message}</h5>
+					)}
+					<div
+						className={`auth ${
+							authStatus?.message && !authStatus?.success && "input-error"
+						}`}>
+						<div className="auth-main">
+							<h3>{t("sign_in_itage_shop")}</h3>
+							<br />
+							<div className="auth-wrapper">
+								<Formik
+									initialValues={{
+										email: "",
+										password: "",
+									}}
+									validateOnChange
+									validationSchema={SignInSchema}
+									onSubmit={onSubmitForm}>
+									{() => (
+										<Form>
+											<div className="auth-field">
+												<Field
+													disabled={isAuthenticating}
+													name="email"
+													type="email"
+													label={t("email")}
+													placeholder={t("enter_your_email")}
+													component={CustomInput}
+												/>
+											</div>
+											<div className="auth-field">
+												<Field
+													disabled={isAuthenticating}
+													name="password"
+													type="password"
+													label={t("password")}
+													placeholder={t("enter_your_password")}
+													component={CustomInput}
+												/>
+											</div>
+											<br />
+											<div className="auth-field auth-action">
+												<Link
+													onClick={onClickLink}
+													style={{ textDecoration: "underline" }}
+													to={FORGOT_PASSWORD}>
+													<span>{t("forgot_your_password")}</span>
+												</Link>
+												<button
+													className="button auth-button"
+													disabled={isAuthenticating}
+													type="submit">
+													{isAuthenticating ? "Signing In" : "Sign In"}
+													&nbsp;
+													{isAuthenticating ? (
+														<LoadingOutlined />
+													) : (
+														<ArrowRightOutlined />
+													)}
+												</button>
+											</div>
+										</Form>
+									)}
+								</Formik>
+							</div>
+						</div>
+						<div className="auth-divider">
+							<h6>OR</h6>
+						</div>
+						<SocialLogin isLoading={isAuthenticating} />
+					</div>
+					<div className="auth-message">
+						<span className="auth-info">
+							<strong>{t("dont_account")}</strong>
+						</span>
+						<button
+							className="button button-small button-border button-border-gray button-icon"
+							disabled={isAuthenticating}
+							onClick={onSignUp}
+							type="button">
+							{t("sign_up")}
+						</button>
+					</div>
+				</>
+			)}
+		</div>
+	);
 };
 
 SignIn.propTypes = {
