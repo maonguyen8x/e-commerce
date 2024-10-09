@@ -1,0 +1,109 @@
+### Ignore unnecessary files in e-commerce.Server
+
+# User-specific files
+e-commerce.Server/appsettings.json
+e-commerce.Server/appsettings.*.json
+e-commerce.Server/obj
+e-commerce.Server/bin
+e-commerce.Server/Migrations
+
+# Visual Studio 2015/2017/2022 cache/options directory
+.vs/
+.vs/e-commerce/
+*.vs/
+
+# .NET
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Files built by Visual Studio
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.tlog
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# Visual Studio code coverage results
+*.coverage
+*.coveragexml
+
+# NuGet Packages
+*.nupkg
+# NuGet Symbol Packages
+*.snupkg
+# The packages folder can be ignored because of Package Restore
+**/[Pp]ackages/*
+# except build/, which is used as an MSBuild target.
+!**/[Pp]ackages/build/
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/[Pp]ackages/repositories.config
+# NuGet v3's project.json files produces more ignorable files
+*.nuget.props
+*.nuget.targets
+
+
+### Ignore unnecessary files in e-commerce.client
+
+# dependencies
+e-commerce.client/node_modules
+e-commerce.client/.pnp
+.pnp.js
+# testing
+e-commerce.client/coverage
+
+# production
+e-commerce.client/build
+
+# env files
+e-commerce.client/.env
+e-commerce.client/.DS_Store
+e-commerce.client/.env.local
+e-commerce.client/.env.development.local
+e-commerce.client/.env.test.local
+e-commerce.client/.env.production.local
+
+e-commerce.client/npm-debug.log*
+e-commerce.client/yarn-debug.log*
+e-commerce.client/yarn-error.log*
+e-commerce.client/yarn.lock
+e-commerce.client/package-*.json
+
+# VS Code files for those working on multiple tools
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
