@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .price-range {
   width: 100%;
   position: relative;
@@ -34,7 +36,8 @@
 
 .price-input-error {
   color: red !important;
-  background: transparentize(red, .9);
+  // background: transparentize(red, .9);
+  background: color.adjust(red, $alpha: -0.9);
 }
 
 .price-range-scale {

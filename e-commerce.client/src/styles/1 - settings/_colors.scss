@@ -1,6 +1,7 @@
 // 
 // COLORS ---------
 // 
+@use "sass:color";
 
 :root {
   --nav-bg: #f8f8f8;
@@ -38,12 +39,15 @@ $gray-20: #b6b6b6;
 
 // Buttons
 $button-color: #101010;
+// $button-hover: lighten($button-color, 10%);
 $button-hover: color.adjust($button-color, $lightness: 10%);
 
 // Social
 $color-facebook: #0078ff;
-$color-facebook-hover: darken($color-facebook, 5%);
+// $color-facebook-hover: darken($color-facebook, 5%);
+$color-facebook-hover: color.adjust($color-facebook, $lightness: -5%);
 $color-github: #24292e;
-$color-github-hover: lighten($color-github, 5%);
+// $color-github-hover: lighten($color-github, 5%);
+$color-github-hover: color.adjust($color-github, $lightness: 5%);
 
 $color-success: #000;

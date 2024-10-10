@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .ReactModal__Overlay {
   z-index: map-get($z-index, 'modal');
 }
@@ -20,7 +22,8 @@
   background: none;
 
   i {
-		color: lighten($off-black, 10%);
+		// color: lighten($off-black, 10%);
+    color: color.scale($off-black, $lightness: 10%);
   }
 
   &:hover {
