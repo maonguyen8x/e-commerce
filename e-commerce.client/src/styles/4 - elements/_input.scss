@@ -1,3 +1,5 @@
+@use "sass:color";
+
 input {
   border: 1px solid $border-color;
   background: transparent;
@@ -106,7 +108,8 @@ input[type=radio] + label:after {
 
 input[type=checkbox]:hover + label:before,
 input[type=radio]:hover + label:before {
-  border: 2px solid darken($border-color-focus, 5%);
+  // border: 2px solid darken($border-color-focus, 5%);
+  border: 2px solid color.adjust($border-color-focus, $lightness: -5%);
 }
 
 input[type=checkbox]:checked + label:before,

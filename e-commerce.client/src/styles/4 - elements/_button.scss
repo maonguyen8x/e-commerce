@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .button {
   background: $button-color;
   padding: $m-size;
@@ -42,7 +44,8 @@
 .button-muted {
   @extend .button;
   background: $background-color-01;
-  color: lighten($paragraph-color, 20%);
+  // color: lighten($paragraph-color, 20%);
+color: color.adjust($paragraph-color, $lightness: 20%);
   border: 1px solid $border-color;
 
   &:hover {
@@ -72,7 +75,8 @@
   color: #fff;
 
   &:hover {
-    background: darken(red, 10%);
+    // background: darken(red, 10%);
+    background: color.adjust(red, $lightness: -10%);
   }
 }
 

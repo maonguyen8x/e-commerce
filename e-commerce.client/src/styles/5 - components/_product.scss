@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -371,7 +373,8 @@
   right: -10px;
 
   &:hover {
-    color: darken(red, 10%);
+    // color: darken(red, 10%);
+    color: color.adjust(red, $lightness: -10%);
   }
 
   i {

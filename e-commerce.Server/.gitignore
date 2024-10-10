@@ -108,13 +108,4 @@ e-commerce.client/package-*.json
 .AppleDouble
 .LSOverride
 
-#NuGet
-packages/
-
-# Ignore binary files and object files from e-commerce.Server
 e-commerce.Server/bin/
-e-commerce.Server/obj/
-e-commerce.client/obj/
-e-commerce.client/node_modules/
-
- .bin/Debug/
