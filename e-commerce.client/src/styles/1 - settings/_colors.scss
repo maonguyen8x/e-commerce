@@ -38,7 +38,7 @@ $gray-20: #b6b6b6;
 
 // Buttons
 $button-color: #101010;
-$button-hover: lighten($button-color, 10%);
+$button-hover: color.adjust($button-color, $lightness: 10%);
 
 // Social
 $color-facebook: #0078ff;
