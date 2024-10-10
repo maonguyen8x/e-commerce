@@ -1,0 +1,22 @@
+{
+  "name": "e-commerce.server",
+  "version": "1.0.0",
+  "description": "PM> Install-Package Microsoft.AspNetCore.Authentication.JwtBearer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maonguyen8x/e-commerce.git"
+  },
+  "keywords": [
+    "e-commerce"
+  ],
+  "author": "Mao Nguyen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maonguyen8x/e-commerce/issues"
+  },
+  "homepage": "https://github.com/maonguyen8x/e-commerce#readme"
+}
