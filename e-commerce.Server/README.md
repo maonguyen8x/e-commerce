@@ -61,8 +61,8 @@ appsettings.json
 
 ## Server:
 ```Bash
-    dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 8.0.10
-    dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 8.0.8
-    dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version 8.0.10
-    dotnet add package Microsoft.AspNetCore.Identity --version 2.2.0
-    dotnet add package BCrypt.Net-Next --version 4.0.3
+PM> dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 8.0.10
+PM> dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 8.0.8
+PM> dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version 8.0.10
+PM> dotnet add package Microsoft.AspNetCore.Identity --version 2.2.0
+PM> dotnet add package BCrypt.Net-Next --version 4.0.3

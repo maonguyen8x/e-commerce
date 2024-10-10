@@ -55,6 +55,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@types/react-i18next": "^8.1.0",
+    "axios": "^1.7.7",
     "firebase": "^8.4.3",
     "formik": "^2.2.6",
     "history": "^4.10.0",
