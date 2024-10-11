@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .toast {
   position: fixed;
   top: 100px;
@@ -27,7 +29,8 @@
   color: $red;
   border: 1px solid $red;
   padding: $m-size;
-  background: lighten($red, 40%);
+  // background: lighten($red, 40%);
+  background: color.adjust($red, $lightness: 40%);
 
   .toast-msg { color: $red; }
 }
@@ -36,8 +39,8 @@
   color: $yellow;
   border: 1px solid $yellow;
   padding: $m-size;
-  background: lighten($yellow, 45%);
-
+  // background: lighten($yellow, 45%);
+  background: color.adjust($yellow, $lightness: 45%);
   .toast-msg { color: $yellow; }
 }
 
@@ -45,8 +48,9 @@
   color: $green;
   border: 1px solid $green;
   padding: $m-size;
-  background: lighten($green, 60%);
-
+  // background: lighten($green, 60%);
+  // After (using color.adjust)
+  background: color.adjust($green, $lightness: 60%);
   .toast-msg { color: $green; }
 }
 

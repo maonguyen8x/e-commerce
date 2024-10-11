@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .checkout {
   width: 100%;
   animation: slide-up .5s ease;
@@ -59,7 +61,8 @@
     margin: auto;
     width: 85%;
     height: 3px;
-    background: transparentize($border-color, .5);
+    // background: transparentize($border-color, .5);
+    background: color.adjust($border-color, $alpha: -0.5);
   }
 }
 

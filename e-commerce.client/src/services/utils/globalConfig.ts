@@ -1,7 +1,7 @@
-// import { PATH_DASHBOARD, PATH_PUBLIC } from '../routes/paths';
+import {  PATH_PUBLIC } from '../../routers/paths';
 
 // URLS
-export const HOST_API_KEY = 'https://localhost:7237/api';
+export const HOST_API_KEY = 'https://localhost:7006/api';
 export const REGISTER_URL = '/Auth/register';
 export const LOGIN_URL = '/Auth/login';
 export const ME_URL = '/Auth/me';
@@ -15,6 +15,6 @@ export const ME_URL = '/Auth/me';
 // export const MY_LOGS_URL = '/Logs/mine';
 
 // Auth Routes
-// export const PATH_AFTER_REGISTER = PATH_PUBLIC.login;
+export const PATH_AFTER_REGISTER = PATH_PUBLIC.login;
 // export const PATH_AFTER_LOGIN = PATH_DASHBOARD.dashboard;
 // export const PATH_AFTER_LOGOUT = PATH_PUBLIC.home;

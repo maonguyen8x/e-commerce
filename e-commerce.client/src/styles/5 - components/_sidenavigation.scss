@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .sidenavigation {
   width: 250px;
   height: 100%;
@@ -22,14 +24,17 @@
   opacity: .8;
 
   &:hover {
-    background: lighten($black, 5%);
+    // background: lighten($black, 5%);
+    // After (using color.adjust)
+    background: color.adjust($black, $lightness: 5%);
     text-decoration: none;
     opacity: 1;
   }
 }
 
 .sidenavigation-menu-active {
-  background: lighten($black, 7%);
+  // background: lighten($black, 7%);
+  background: color.adjust($black, $lightness: 7%);
   opacity: 1;
   border-right: 4px solid $yellow;
 }

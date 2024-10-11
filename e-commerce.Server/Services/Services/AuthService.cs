@@ -15,6 +15,7 @@ using e_commerce.Server.Models;
 using e_commerce.Server.Data;
 using e_commerce.Server.DTO.Response;
 using e_commerce.Server.DTO.Accounts;
+using System.Text.RegularExpressions;
 
 namespace e_commerce.Server.Services.Services
 {
@@ -86,6 +87,16 @@ namespace e_commerce.Server.Services.Services
             var response = new GeneralServiceResponseDto();
             try
             {
+                if (string.IsNullOrWhiteSpace(registerDto.UserName) || !Regex.IsMatch(registerDto.UserName, @"^[a-zA-Z0-9]+$"))
+                {
+                    return new GeneralServiceResponseDto()
+                    {
+                        IsSucceed = false,
+                        StatusCode = 400,
+                        Message = "Username is invalid, can only contain letters or digits."
+                    };
+                }
+
                 var isExistsUser = await _userManager.FindByNameAsync(registerDto.UserName);
                 if (isExistsUser is not null)
                     return new GeneralServiceResponseDto()
@@ -97,11 +108,9 @@ namespace e_commerce.Server.Services.Services
 
                 ApplicationUser newUser = new ApplicationUser()
                 {
-                    FirstName = registerDto.FirstName,
-                    LastName = registerDto.LastName,
-                    Email = registerDto.Email,
+                    FullName = registerDto.FullName,
                     UserName = registerDto.UserName,
-                    Address = registerDto.Address,
+                    Email = registerDto.Email,
                     SecurityStamp = Guid.NewGuid().ToString()
                 };
 
@@ -212,10 +221,9 @@ namespace e_commerce.Server.Services.Services
             
             var authClaims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.UserName),
+                //new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim("FirstName", user.FirstName),
-                new Claim("LastName", user.LastName),
+                new Claim("FullName", user.FullName),
             };
 
             foreach (var userRole in userRoles)
@@ -247,8 +255,7 @@ namespace e_commerce.Server.Services.Services
             return new UserInfoResult()
             {
                 Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
+				FullName = user.FullName,
                 UserName = user.UserName,
                 Email = user.Email,
                 CreatedAt = user.CreatedAt,

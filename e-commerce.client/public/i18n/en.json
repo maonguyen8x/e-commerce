@@ -42,6 +42,9 @@
     "loading_product":"Loading Product...",
 
     "enter_your_email": "Please enter your email",
+    "enter_full_name": "Please enter full name",
+    "enter_user_name": "Please enter user name",
+    "user_name": "User Name",
     "enter_your_password": "Please enter your password",
 
     "enter_your_email_address_and_we_will_send_to_you_a_password_reset_email":"Enter your email address and we will send you a password reset email.",
@@ -67,6 +70,7 @@
     "recommended_products": "Recommended Products",
 
     "full_name_required": "Full name is required",
+    "user_name_required": "User name is required",
     "full_name_at_least":"Full name should be at least 4 characters",
     "full_name_should_be_long":"Full name should be only be 4 characters long",
 
