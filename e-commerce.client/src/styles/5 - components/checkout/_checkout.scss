@@ -62,6 +62,7 @@
     width: 85%;
     height: 3px;
     // background: transparentize($border-color, .5);
+    // After (using color.adjust)
     background: color.adjust($border-color, $alpha: -0.5);
   }
 }

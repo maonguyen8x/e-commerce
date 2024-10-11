@@ -56,3 +56,8 @@ $ yarn build
 * Firebase auth provider authentication
 * Account creation and edit
 
+## Run command line
+```bash
+1. yarn install
+2. yarn dev
+
