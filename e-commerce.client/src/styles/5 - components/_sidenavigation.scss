@@ -25,6 +25,7 @@
 
   &:hover {
     // background: lighten($black, 5%);
+    // After (using color.adjust)
     background: color.adjust($black, $lightness: 5%);
     text-decoration: none;
     opacity: 1;

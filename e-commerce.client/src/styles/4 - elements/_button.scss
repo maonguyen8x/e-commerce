@@ -45,9 +45,8 @@
   @extend .button;
   background: $background-color-01;
   // color: lighten($paragraph-color, 20%);
-color: color.adjust($paragraph-color, $lightness: 20%);
+  color: color.adjust($paragraph-color, $lightness: 20%);
   border: 1px solid $border-color;
-
   &:hover {
     background: $background-color;
     border: 1px solid $border-color-focus;

@@ -34,6 +34,9 @@
     "back_to_profile": "プロフィールに戻る",
     "enter_your_password": "パスワードを入力してください",
     "enter_your_email": "メールを入力してください",
+    "enter_full_name": "フルネームを入力してください",
+    "enter_user_name": "ユーザー名を入力してください",
+    "user_name": "ユーザー名",
     "dont_account": "アカウントをお持ちでないですか？",
     "confirm_password": "パスワードを入力して確認してください",
     "confirm_update": "更新を確認",
@@ -66,6 +69,7 @@
     "recommended_products": "おすすめ商品",
 
     "full_name_required": "フ氏名は必須です。",
+    "user_name_required": "ユーザー名は必須です",
     "full_name_at_least":"氏名は少なくとも4文字以上である必要があります。",
     "full_name_should_be_long":"氏名は4文字でなければなりません。",
     

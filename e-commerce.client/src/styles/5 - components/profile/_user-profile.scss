@@ -25,6 +25,7 @@
   height: 100%;
   position: relative;
   // background: lighten($border-color, 3%);
+  // After (using color.adjust)
   background: color.adjust($border-color, $lightness: 3%);
   overflow: hidden;
   // display: flex;
