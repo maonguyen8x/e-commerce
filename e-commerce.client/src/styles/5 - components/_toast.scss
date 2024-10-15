@@ -29,8 +29,9 @@
   color: $red;
   border: 1px solid $red;
   padding: $m-size;
-  background: lighten($red, 40%);
-
+  // background: lighten($red, 40%);
+  //After update 
+  background: color.adjust($red, $lightness: 40%);
   .toast-msg { color: $red; }
 }
 
@@ -47,7 +48,9 @@
   color: $green;
   border: 1px solid $green;
   padding: $m-size;
-  background: lighten($green, 60%);
+  // background: lighten($green, 60%);
+  //After update
+  background: color.adjust($green, $lightness: 60%);
 
   .toast-msg { color: $green; }
 }

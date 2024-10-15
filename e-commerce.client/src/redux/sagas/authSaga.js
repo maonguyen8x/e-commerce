@@ -133,11 +133,21 @@ function* authSaga({ type, payload }) {
 					email: payload.email,
 					dateJoined: new Date().getTime(),
 				};
+
+				console.log("response: ", response);
 				toast.success("Register Was Successfull. Please Login.");
+				yield call(history.push, "/signin");
+
 				yield put(setProfile(user));
 				yield put(setAuthenticating(false));
 			} catch (e) {
-				yield handleError(e);
+				if ((e && e.status === 409) || e.status === 400) {
+					toast.error(e.data || "UserName || Email Already Exists");
+				} else {
+					toast.error("An Error occurred. Please contact admins.");
+				}
+
+				yield put(setAuthenticating(false));
 			}
 			break;
 		case SIGNOUT: {
