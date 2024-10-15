@@ -84,71 +84,96 @@ namespace e_commerce.Server.Services.Services
         /// <returns></returns>
         public async Task<GeneralServiceResponseDto> RegisterAsync(RegisterDto registerDto)
         {
-            var response = new GeneralServiceResponseDto();
-            try
+            if (!IsValidUsername(registerDto.UserName))
             {
-                if (string.IsNullOrWhiteSpace(registerDto.UserName) || !Regex.IsMatch(registerDto.UserName, @"^[a-zA-Z0-9]+$"))
-                {
-                    return new GeneralServiceResponseDto()
-                    {
-                        IsSucceed = false,
-                        StatusCode = 400,
-                        Message = "Username is invalid, can only contain letters or digits."
-                    };
-                }
-
-                var isExistsUser = await _userManager.FindByNameAsync(registerDto.UserName);
-                if (isExistsUser is not null)
-                    return new GeneralServiceResponseDto()
-                    {
-                        IsSucceed = false,
-                        StatusCode = 409,
-                        Message = "UserName Already Exists"
-                    };
-
-                ApplicationUser newUser = new ApplicationUser()
-                {
-                    FullName = registerDto.FullName,
-                    UserName = registerDto.UserName,
-                    Email = registerDto.Email,
-                    SecurityStamp = Guid.NewGuid().ToString()
-                };
-
-                var createUserResult = await _userManager.CreateAsync(newUser, registerDto.Password);
-
-                if(!createUserResult.Succeeded)
-                {
-                    var errorString = "User Creation failed because: ";
-                    foreach (var error in createUserResult.Errors)
-                    {
-                        errorString += " # " + error.Description;
-                    }
-                    return new GeneralServiceResponseDto()
-                    {
-                        IsSucceed = false,
-                        StatusCode = 400,
-                        Message = errorString
-                    };
-                }
-
-                //await _userManager.AddToRoleAsync(newUser, StaticUserRoles.USER);
-                await _userManager.AddToRoleAsync(newUser, StaticUserRoles.ADMIN);
-                await _logService.SaveNewLog(newUser.UserName, "Registered to Website");
-            } 
-            catch (Exception ex)
-            {
-                response.IsSucceed = false;
-                response.Message = ex.Message;
+                return CreateErrorResponse(400, "Username is invalid, can only contain letters or digits.");
             }
 
-            return new GeneralServiceResponseDto()
+            // Check if UserName or Email exists
+            var isExistsUser = await _userManager.FindByNameAsync(registerDto.UserName);
+            var isExistsEmail = await _userManager.FindByNameAsync(registerDto.Email);
+
+            if (isExistsUser != null || isExistsEmail != null)
+                return new GeneralServiceResponseDto()
+                {
+                    IsSucceed = false,
+                    StatusCode = 409,
+                    Message = "UserName or Email Already Exists"
+                };
+
+            var newUser = new ApplicationUser()
+            {
+                FullName = registerDto.FullName,
+                UserName = registerDto.UserName,
+                Email = registerDto.Email,
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+
+            var createUserResult = await _userManager.CreateAsync(newUser, registerDto.Password);
+
+            if(!createUserResult.Succeeded)
+            {
+                var errorMessage = CreateErrorMessage(createUserResult.Errors);
+                return CreateErrorResponse(400, errorMessage);
+            }
+
+            //await _userManager.AddToRoleAsync(newUser, StaticUserRoles.USER);
+            await _userManager.AddToRoleAsync(newUser, StaticUserRoles.ADMIN);
+            await _logService.SaveNewLog(newUser.UserName, "Registered to Website");
+            //catch (Exception ex)
+            //{
+            //    response.IsSucceed = false;
+            //    response.Message = ex.Message;
+            //}
+
+            //return new GeneralServiceResponseDto()
+            //{
+            //    IsSucceed = true,
+            //    StatusCode = 201,
+            //    Message = "User Created Successfully"
+            //};
+            return CreateSuccessResponse("User Created Successfully");
+        }
+        #endregion
+
+        #region Function Common
+        private bool IsValidUsername(string username)
+        {
+            return !string.IsNullOrWhiteSpace(username) && Regex.IsMatch(username, @"^[a-zA-Z0-9]+$");
+        }
+
+        private string CreateErrorMessage(IEnumerable<IdentityError> errors)
+        {
+            return "User Creation failed because: " + string.Join(" # ", errors.Select(e => e.Description));
+        }
+
+        private GeneralServiceResponseDto CreateErrorResponse(int statusCode, string message)
+        {
+            return new GeneralServiceResponseDto
+            {
+                IsSucceed = false,
+                StatusCode = statusCode,
+                Message = message
+            };
+        }
+
+        /// <summary>
+        /// CreateSuccessResponse
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        private GeneralServiceResponseDto CreateSuccessResponse(string message)
+        {
+            return new GeneralServiceResponseDto
             {
                 IsSucceed = true,
                 StatusCode = 201,
-                Message = "User Created Successfully"
+                Message = message
             };
         }
+
         #endregion
+
         #region Login
         /// <summary>
         /// Feat: User login account that registered
