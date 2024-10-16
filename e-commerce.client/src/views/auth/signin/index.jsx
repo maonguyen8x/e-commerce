@@ -15,15 +15,16 @@ import { useTranslation } from "react-i18next";
 
 const SignIn = ({ history }) => {
 	const { t } = useTranslation();
-
 	const SignInSchema = Yup.object().shape({
-		email: Yup.string()
-			.email(t("email_not_invalid"))
-			.required(t("email_required")),
+		// email: Yup.string()
+		// 	.email(t("email_not_invalid"))
+		// 	.required(t("email_required")),
+		username: Yup.string().required(t("user_name_required")),
 		password: Yup.string().required(t("password_required")),
 	});
 
-	const { authStatus, isAuthenticating } = useSelector((state) => ({
+	const { user, authStatus, isAuthenticating } = useSelector((state) => ({
+		user: state.auth.user,
 		authStatus: state.app.authStatus,
 		isAuthenticating: state.app.isAuthenticating,
 	}));
@@ -41,10 +42,17 @@ const SignIn = ({ history }) => {
 		[]
 	);
 
+	useEffect(() => {
+		if (user) {
+			// Redirect to dashboard or other page after successful login
+			history.push("/admin/dashboard");
+		}
+	}, [user, history]);
+
 	const onSignUp = () => history.push(SIGNUP);
 
 	const onSubmitForm = (form) => {
-		dispatch(signIn(form.email, form.password));
+		dispatch(signIn(form.username, form.password));
 	};
 
 	const onClickLink = (e) => {
@@ -61,6 +69,9 @@ const SignIn = ({ history }) => {
 					</h3>
 				</div>
 			)}
+			{authStatus?.message && !authStatus?.success && (
+				<h5 className="text-center toast-error">{authStatus?.message}</h5>
+			)}
 			{!authStatus?.success && (
 				<>
 					{authStatus?.message && (
@@ -76,7 +87,7 @@ const SignIn = ({ history }) => {
 							<div className="auth-wrapper">
 								<Formik
 									initialValues={{
-										email: "",
+										username: "",
 										password: "",
 									}}
 									validateOnChange
@@ -87,10 +98,10 @@ const SignIn = ({ history }) => {
 											<div className="auth-field">
 												<Field
 													disabled={isAuthenticating}
-													name="email"
-													type="email"
-													label={t("email")}
-													placeholder={t("enter_your_email")}
+													name="username"
+													type="text"
+													label={t("username")}
+													placeholder={t("enter_user_name")}
 													component={CustomInput}
 												/>
 											</div>

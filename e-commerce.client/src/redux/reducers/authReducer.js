@@ -1,23 +1,40 @@
-import { SIGNIN_SUCCESS, SIGNOUT_SUCCESS } from '@/constants/constants';
+import {
+	SIGNIN,
+	SIGNIN_SUCCESS,
+	SIGNOUT_SUCCESS,
+	SIGNIN_FAILURE,
+} from "@/constants/constants";
 
-const initState = null;
-// {
-// id: 'test-123',
-// role: 'ADMIN',
-// provider: 'password'
-// };
-
-export default (state = initState, action) => {
-  switch (action.type) {
-    case SIGNIN_SUCCESS:
-      return {
-        id: action.payload.id,
-        role: action.payload.role,
-        provider: action.payload.provider
-      };
-    case SIGNOUT_SUCCESS:
-      return null;
-    default:
-      return state;
-  }
+const initialState = {
+	isAuthenticating: false,
+	authStatus: null,
 };
+
+const authReducer = (state = initialState, action) => {
+	switch (action.type) {
+		case SIGNIN:
+			return { ...state, loading: true, isAuthenticating: true };
+		case SIGNIN_SUCCESS:
+			return {
+				...state,
+				isAuthenticating: false,
+				loading: false,
+				authStatus: { success: true, message: "Login successful!" },
+			};
+		case SIGNOUT_SUCCESS:
+			return null;
+		case SIGNIN_FAILURE:
+			return {
+				...state,
+				isAuthenticating: false,
+				authStatus: { success: false, message: action.error },
+				loading: false,
+				error: action.error,
+			};
+
+		default:
+			return state;
+	}
+};
+
+export default authReducer;

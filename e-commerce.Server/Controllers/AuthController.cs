@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using e_commerce.Server.DTO.Accounts;
 using e_commerce.Server.Services.Interfaces;
 using e_commerce.Server.DTO.Auth;
+using e_commerce.Server.Constants;
 
 namespace Backend.Controllers
 {
@@ -25,6 +26,20 @@ namespace Backend.Controllers
             return StatusCode(seedResult.StatusCode, seedResult.Message);
         }
 
+        [HttpPost()]
+        [Route("register-admin")]
+        [Authorize(Roles = StaticUserRoles.ADMIN)]
+        public async Task<IActionResult> RegisterAdmin(RegisterDto model)
+        {
+            var result = await _accountService.RegisterAdminAsync(model);
+
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+
+            return Ok(result.Message);
+        }
         #region Register
         [HttpPost()]
         [Route("register")]
@@ -35,7 +50,7 @@ namespace Backend.Controllers
                 return BadRequest(ModelState);
             }
             
-            var registerResult = await _accountService.RegisterAsync(registerDto);
+            var registerResult = await _accountService.RegisterUserAsync(registerDto);
             return StatusCode(registerResult.StatusCode, registerResult.Message);
         }
         #endregion
@@ -53,7 +68,7 @@ namespace Backend.Controllers
             var loginResult = await _accountService.LoginAsync(loginDTO);
             if (loginResult is null)
             {
-                return Unauthorized("Your credentials are invalid. Please contact to an Admin");
+                return Unauthorized(new { message = "Username or Password is incorrect. Please contact to an Admin" });
             }
 
             return Ok(loginResult);
@@ -87,9 +102,13 @@ namespace Backend.Controllers
         #region GetUserNamesList
         [HttpGet]
         [Route("usernames")]
-        public async Task<ActionResult<IEnumerable<string>>> GetUserNamesList()
+        public async Task<ActionResult<IEnumerable<string>>> GetByUserName(string username)
         {
-            var usernames = await _accountService.GetUsernamesListAsync();
+            var usernames = await _accountService.GetByUsernameAsync(username);
+            if (usernames == null || !usernames.Any()) // Check for null or empty collection
+            {
+                return NotFound("No usernames found.");
+            }
 
             return Ok(usernames);
         }
