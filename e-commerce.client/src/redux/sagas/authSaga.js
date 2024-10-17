@@ -81,9 +81,38 @@ function* authSaga({ type, payload }) {
 		case SIGNIN:
 			try {
 				yield initRequest();
-				yield call(firebase.signIn, payload.email, payload.password);
+
+				const response = yield call(
+					apiServices.signIn,
+					payload.username,
+					payload.password
+				);
+
+				if (response) {
+					yield put(signInSuccess(response));
+					yield put(
+						setAuthStatus({ success: true, message: "Login successful!" })
+					);
+					toast.success("Login Was Successfull.");
+					console.log(1);
+				}
+				console.log("newToken: ", response.newToken);
+				console.log("newToken: ", response.newToken);
+
+				// Store the token and user role in localStorage (or session)
+				localStorage.setItem("newToken", response.newToken);
+				localStorage.setItem("role", response.role);
+
+				// // Fetch user ID using the entered username
+				// const userResponse = yield call(
+				// 	`http://localhost:5003/api/UserController/User/GetByUsername/${username}`
+				// );
+				// localStorage.setItem("userername", username);
 			} catch (e) {
 				yield handleError(e);
+				yield put(setAuthStatus({ success: false, message: error.message }));
+			} finally {
+				yield put(setAuthenticating(false));
 			}
 			break;
 		case SIGNIN_WITH_GOOGLE:
@@ -114,7 +143,7 @@ function* authSaga({ type, payload }) {
 			try {
 				yield put(setAuthenticating(true));
 
-				const response = yield call(
+				yield call(
 					apiServices.createAccount,
 					payload.fullname,
 					payload.username,
@@ -133,11 +162,20 @@ function* authSaga({ type, payload }) {
 					email: payload.email,
 					dateJoined: new Date().getTime(),
 				};
+
 				toast.success("Register Was Successfull. Please Login.");
+				yield call(history.push, "/signin");
+
 				yield put(setProfile(user));
 				yield put(setAuthenticating(false));
 			} catch (e) {
-				yield handleError(e);
+				// yield handleError(e);
+				if ((e && e.status === 409) || e.status === 400) {
+					toast.error(e.data || "UserName || Email Already Exists");
+				} else {
+					toast.error("An Error occurred. Please contact admins.");
+				}
+				yield put(setAuthenticating(false));
 			}
 			break;
 		case SIGNOUT: {
