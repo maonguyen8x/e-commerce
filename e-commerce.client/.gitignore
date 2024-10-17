@@ -10,3 +10,4 @@ debug.log
 .vs/
 e-commerce.Server/obj/Debug/
 */obj/Debug/
+.vscode/
