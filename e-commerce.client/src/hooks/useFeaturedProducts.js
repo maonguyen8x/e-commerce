@@ -1,6 +1,7 @@
 import { useDidMount } from '@/hooks';
 import { useEffect, useState } from 'react';
 import firebase from '@/services/firebase';
+import axios from 'axios';
 
 const useFeaturedProducts = (itemsCount) => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -21,12 +22,15 @@ const useFeaturedProducts = (itemsCount) => {
           setLoading(false);
         }
       } else {
-        const items = [];
+        // const items = [];
 
-        docs.forEach((snap) => {
-          const data = snap.data();
-          items.push({ id: snap.ref.id, ...data });
-        });
+        // docs.forEach((snap) => {
+        //   const data = snap.data();
+        //   items.push({ id: snap.ref.id, ...data });
+        // });
+
+        const res = await axios.get('https://localhost:7006/api/product/list')
+        const items = res.data;
 
         if (didMount) {
           setFeaturedProducts(items);

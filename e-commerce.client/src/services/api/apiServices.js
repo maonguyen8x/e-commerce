@@ -55,6 +55,15 @@ const apiServices = {
 			throw error.response ? error.response.data : new Error("API error");
 		}
 	},
+
+	 getAllProduct: async () => {
+	 	try {
+	 		const response = await axios.get('https://localhost:7006/api/product/list')
+	 		return response.data;
+	 	} catch (error) {
+	 		throw error.response ? error.response.data : new Error("API error");
+	 	}
+	 },
 };
 
 export default apiServices;

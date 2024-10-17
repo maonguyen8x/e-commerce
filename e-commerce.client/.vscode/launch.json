@@ -6,14 +6,16 @@
       "request": "launch",
       "name": "localhost (Edge)",
       "url": "https://localhost:5173",
-      "webRoot": "${workspaceFolder}"
+      "webRoot": "${workspaceFolder}",
+      "preLaunchTask": "yarn install"
     },
     {
       "type": "chrome",
       "request": "launch",
       "name": "localhost (Chrome)",
       "url": "https://localhost:5173",
-      "webRoot": "${workspaceFolder}"
+      "webRoot": "${workspaceFolder}",
+      "preLaunchTask": "yarn install"
     }
   ]
 }
