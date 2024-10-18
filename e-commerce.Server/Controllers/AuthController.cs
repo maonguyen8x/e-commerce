@@ -62,16 +62,32 @@ namespace Backend.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(new { message = "Invalid data", status = 400 });
             }
 
-            var loginResult = await _accountService.LoginAsync(loginDTO);
-            if (loginResult is null)
+            try
             {
-                return Unauthorized(new { message = "Username or Password is incorrect. Please contact to an Admin" });
-            }
+                // Call to LoginAsync && receive the response
+                var loginResult = await _accountService.LoginAsync(loginDTO);
 
-            return Ok(loginResult);
+                if (!loginResult.IsSucceed)
+                {
+                    return StatusCode(loginResult.StatusCode, new { message = loginResult.Message, status = loginResult.StatusCode });
+                }
+
+                // IsSucceed, return token, userInfo && messages
+                return Ok(new
+                {
+                    message = loginResult.Message,
+                    status = loginResult.StatusCode,
+                    token = ((LoginServiceResponseDTO)loginResult.Data).NewToken,
+                    userInfo = ((LoginServiceResponseDTO)loginResult.Data).UserInfo
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An unexpected error occurred", error = ex.Message });
+            }
         }
         #endregion
 

@@ -34,7 +34,6 @@ const apiServices = {
 					password,
 				}
 			);
-			console.log("response.data", response.data);
 			return response.data;
 		} catch (error) {
 			throw error.response ? error.response.data : new Error("API error");
@@ -50,6 +49,14 @@ const apiServices = {
 					password,
 				}
 			);
+
+			console.log("response: ", response.data);
+
+			// Save role, newToken into localStorage
+			localStorage.setItem("roles", response.data.roles);
+			localStorage.setItem("newToken", response.data.newToken);
+			localStorage.setItem("userName", response.data.userName);
+
 			return response.data;
 		} catch (error) {
 			throw error.response ? error.response.data : new Error("API error");

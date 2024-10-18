@@ -157,7 +157,7 @@ namespace e_commerce.Server.Services.Services
             await _userManager.AddToRoleAsync(newUser, StaticUserRoles.ADMIN);
             await _logService.SaveNewLog(newUser.UserName, "Registered to Website");
 
-            return CreateSuccessResponse("User Created Successfully");
+            return CreateSuccessResponse(201, "User Created Successfully");
         }
         #endregion
 
@@ -187,17 +187,26 @@ namespace e_commerce.Server.Services.Services
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        private GeneralServiceResponseDto CreateSuccessResponse(string message)
+        private GeneralServiceResponseDto CreateSuccessResponse(int statusCode, string message)
         {
             return new GeneralServiceResponseDto
             {
                 IsSucceed = true,
-                StatusCode = 201,
+                StatusCode = statusCode,
                 Message = message
             };
         }
 
         #endregion
+
+        public class CustomException : Exception
+        {
+            public int StatusCode { get; }
+            public CustomException(string message, int statusCode) : base(message)
+            {
+                StatusCode = statusCode;
+            }
+        }
 
         #region Login
         /// <summary>
@@ -205,34 +214,43 @@ namespace e_commerce.Server.Services.Services
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<LoginServiceResponseDTO?> LoginAsync(LoginDTO loginDto)
+        public async Task<GeneralServiceResponseDto?> LoginAsync(LoginDTO loginDto)
         {
+            var response = new GeneralServiceResponseDto();
+
             // Find user with username
             var user = await _userManager.FindByNameAsync(loginDto.UserName);
             if (user is null)
             {
                 await _logService.SaveNewLog(loginDto.UserName, "Not Found.");
-                CreateErrorResponse(400, "UserName is incorrect.");
+                return CreateErrorResponse(400, "Username is incorrect");
             }
 
-            //// check password of user
+            // Check password of user
             var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, loginDto.Password);
             if (!isPasswordCorrect)
             {
                 await _logService.SaveNewLog(loginDto.Password, "Invalid password for user");
-                CreateErrorResponse(400, "Password is incorrect.");
+                return CreateErrorResponse(400, "Password is incorrect");
             }
 
-            // Return Token and userInfo to front-end
+            // Generate JWT token
             var newToken = await GenerateJWTTokenAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
             var userInfo = GenerateUserInfoObject(user, roles);
             await _logService.SaveNewLog(user.UserName, "New Login");
 
-            return new LoginServiceResponseDTO()
+            // Optionally, you can attach the token and user info to the response
+            return new GeneralServiceResponseDto
             {
-                NewToken = newToken,
-                UserInfo = userInfo
+                IsSucceed = true,  // Set true if the login is successful
+                StatusCode = 200,
+                Message = "Login successful",
+                Data = new LoginServiceResponseDTO()
+                {
+                    NewToken = newToken,
+                    UserInfo = userInfo
+                }
             };
         }
         #endregion

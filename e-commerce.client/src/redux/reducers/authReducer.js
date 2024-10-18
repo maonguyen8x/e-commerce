@@ -20,6 +20,7 @@ const authReducer = (state = initialState, action) => {
 				isAuthenticating: false,
 				loading: false,
 				authStatus: { success: true, message: "Login successful!" },
+				role: action.payload.roles,
 			};
 		case SIGNOUT_SUCCESS:
 			return null;

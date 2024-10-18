@@ -10,7 +10,7 @@ namespace e_commerce.Server.Services.Interfaces
         //Task<ServiceResponse<GetUserDTO>> GetUserById(int id);
         Task<GeneralServiceResponseDto> SeedRolesAsync();
         Task<GeneralServiceResponseDto> RegisterUserAsync(RegisterDto newUser);
-        Task<LoginServiceResponseDTO?> LoginAsync(LoginDTO request);
+        Task<GeneralServiceResponseDto?> LoginAsync(LoginDTO request);
         Task<LoginServiceResponseDTO?> MeAsync(MeDTO meDto);
         Task<IEnumerable<string>> GetByUsernameAsync(string username);
         Task<(bool Success, string Message)> RegisterAdminAsync(RegisterDto model);

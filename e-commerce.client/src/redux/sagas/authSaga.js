@@ -81,38 +81,40 @@ function* authSaga({ type, payload }) {
 		case SIGNIN:
 			try {
 				yield initRequest();
-
 				const response = yield call(
 					apiServices.signIn,
 					payload.username,
 					payload.password
 				);
 
+				console.log("response: ", response);
+
 				if (response) {
-					yield put(signInSuccess(response));
+					yield put(signInSuccess(response.message));
 					yield put(
 						setAuthStatus({ success: true, message: "Login successful!" })
 					);
-					toast.success("Login Was Successfull.");
-					console.log(1);
+					toast.success(response.message);
+					// Save token & role into localStorage (or session)
+					localStorage.setItem("newToken", response.newToken);
+					localStorage.setItem("roles", response.roles);
+
+					if (response.roles === "ADMIN") {
+						window.location.href = "/admin/dashboard"; // Redirect to admin dashboard
+					} else {
+						window.location.href = "/"; // Redirect to normal user page
+					}
 				}
 				console.log("newToken: ", response.newToken);
-				console.log("newToken: ", response.newToken);
-
-				// Store the token and user role in localStorage (or session)
-				localStorage.setItem("newToken", response.newToken);
-				localStorage.setItem("role", response.role);
-
-				// // Fetch user ID using the entered username
-				// const userResponse = yield call(
-				// 	`http://localhost:5003/api/UserController/User/GetByUsername/${username}`
-				// );
-				// localStorage.setItem("userername", username);
 			} catch (e) {
-				yield handleError(e);
-				yield put(setAuthStatus({ success: false, message: error.message }));
-			} finally {
-				yield put(setAuthenticating(false));
+				// yield handleError(e);
+				console.log("e:", e);
+				// yield handleError(e);
+				if (e && e.status === 400) {
+					toast.error(e.message || "UserName || Password is incorrect.");
+				} else {
+					toast.error("An Error occurred. Please contact admins.");
+				}
 			}
 			break;
 		case SIGNIN_WITH_GOOGLE:
@@ -169,9 +171,9 @@ function* authSaga({ type, payload }) {
 				yield put(setProfile(user));
 				yield put(setAuthenticating(false));
 			} catch (e) {
-				// yield handleError(e);
+				console.log("e:", e);
 				if ((e && e.status === 409) || e.status === 400) {
-					toast.error(e.data || "UserName || Email Already Exists");
+					toast.error(e.data || "UserName or Email Already Exists");
 				} else {
 					toast.error("An Error occurred. Please contact admins.");
 				}

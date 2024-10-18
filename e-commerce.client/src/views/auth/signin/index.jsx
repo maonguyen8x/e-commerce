@@ -24,7 +24,6 @@ const SignIn = ({ history }) => {
 	});
 
 	const { user, authStatus, isAuthenticating } = useSelector((state) => ({
-		user: state.auth.user,
 		authStatus: state.app.authStatus,
 		isAuthenticating: state.app.isAuthenticating,
 	}));
@@ -43,11 +42,15 @@ const SignIn = ({ history }) => {
 	);
 
 	useEffect(() => {
-		if (user) {
-			// Redirect to dashboard or other page after successful login
-			history.push("/admin/dashboard");
+		if (authStatus?.success) {
+			const role = localStorage.getItem("roles");
+			if (role === "admin") {
+				history.push("/admin/dashboard");
+			} else {
+				history.push("/");
+			}
 		}
-	}, [user, history]);
+	}, [authStatus, history]);
 
 	const onSignUp = () => history.push(SIGNUP);
 
